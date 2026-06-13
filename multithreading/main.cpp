@@ -12,6 +12,9 @@
 #include "iostream"
 #include "array"
 #include "span"
+#include<thread>
+#include"chrono"
+
 class Print
 {
     public:
@@ -37,13 +40,27 @@ void Print::PrintArray(const std::span<const int>arr) //variabel size ,we can al
 
 }
 
+void work()
+{
+
+    for(int a; a<10;a++)
+  {
+      LOG("Hello from thread");
+   }
+}
+
 
 int main()
 {
 
-    std::array<int , 5> arr={1,2,3,4,5};
+    /*
+        std::array<int , 5> arr={1,2,3,4,5};
     std::array<int , 4> arr2={1,2,3,4};
     Print* printer;
     printer->PrintArray(arr);
     printer->PrintArray(arr2);//variable length so 2nd function
+     */
+    std::thread t1(work);
+    t1.join();
+
 }
