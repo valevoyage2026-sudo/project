@@ -1,12 +1,15 @@
 //static arrays are the arrays the  do not grow
 // unlike dynamic arrys these cannot be reduced or expanded
 
+
+#define  TIME  std::chrono::steady_clock::now()
 #define P_DEBUG 1
 #if P_DEBUG==1
 #define LOG(x) std::cout<<x<<std::endl
 #else
 #define LOG(x)
 #endif
+
 
 
 #include "iostream"
@@ -43,24 +46,39 @@ void Print::PrintArray(const std::span<const int>arr) //variabel size ,we can al
 void work()
 {
 
-    for(int a; a<10;a++)
-  {
-      LOG("Hello from thread");
-   }
+for(int a=0;a<9;a++)
+{
+    LOG("Hello from thread  "<<std::this_thread::get_id()<<"  iteration"<<a);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+}
 }
 
 
-int main()
+int multi()
 {
 
     /*
         std::array<int , 5> arr={1,2,3,4,5};
     std::array<int , 4> arr2={1,2,3,4};
-    Print* printer;
-    printer->PrintArray(arr);
-    printer->PrintArray(arr2);//variable length so 2nd function
+    Print printer;
+    printer.PrintArray(arr);
+    printer.PrintArray(arr2);//variable length so 2nd function
      */
+
+    auto start=TIME;
     std::thread t1(work);
+    std::thread t2(work);
+    std::thread t3(work);
+
     t1.join();
+    t2.join();
+    t3.join();
+    auto end=TIME;
+
+    auto TotalTime=end-start;
+    LOG(TotalTime);
+
 
 }
